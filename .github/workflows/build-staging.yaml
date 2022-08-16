@@ -37,12 +37,16 @@ jobs:
       - name: Helm tool installer
         uses: Azure/setup-helm@v3.3
 
-      - name: Get AKS Credentials
-        uses: Azure/aks-set-context@v1
+      - name: Azure Login
+        uses: Azure/login@v1.4.5
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+      - name: Get AKS Credentials
+        uses: Azure/k8s-set-context@v3.0
+        with:
           resource-group: ${{ secrets.AZURE_RG }}
-          cluster-name: contoso-video    
+          cluster-name: contoso-video 
 
       - name: Run Helm Deploy
         run: |
